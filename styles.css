@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], select, button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.output-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.output-section {
+    width: 48%; /* Slightly less than 50% to account for padding/margins */
+    margin-top: 20px;
+}
+
+#signaturePreview, #htmlOutput {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 200px; /* Optional, for better alignment */
+}
