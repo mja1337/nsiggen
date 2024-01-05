@@ -1,9 +1,42 @@
 document.getElementById('generateButton').addEventListener('click', function() {
-    const fullName = document.getElementById('fullName').value;
-    const jobTitle = document.getElementById('jobTitle').value;
-    const phoneNumber = document.getElementById('phoneNumber').value;
-    const emailAddress = document.getElementById('emailAddress').value;
+    let fullName = document.getElementById('fullName').value;
+    let jobTitle = document.getElementById('jobTitle').value;
+
+    let phoneNumber = document.getElementById('phoneNumber').value;
+    phoneNumber = phoneNumber.replace(/\D/g, ''); // Remove non-numeric chars
+
+    let emailAddress = document.getElementById('emailAddress').value.toLowerCase(); // Email to lowercase
     const subsidiary = document.getElementById('subsidiary').value;
+
+// Format the phone number based on the subsidiary
+    function formatPhoneNumber(number, type) {
+        switch (type) {
+            case 'UK':
+                // Format: +44 (0) XXXX XXX XXX
+                return '+44 (0) ' + number.slice(-10, -6) + ' ' + number.slice(-6, -3) + ' ' + number.slice(-3);
+            case 'US':
+                // Format: +1 XXX XXX XXXX
+                return '+1 ' + number.slice(-10, -7) + ' ' + number.slice(-7, -4) + ' ' + number.slice(-4);
+            case 'IE':
+                // Format: +353 XX XXX XXXX
+                return '+353 ' + number.slice(-9, -7) + ' ' + number.slice(-7, -4) + ' ' + number.slice(-4);
+            default:
+                return number;
+        }
+    }
+
+    phoneNumber = formatPhoneNumber(phoneNumber, subsidiary);
+
+// Function to capitalize the first letter of each word
+    function capitalizeWords(string) {
+        return string.replace(/\b(\w)/g, s => s.toUpperCase());
+    }
+
+// Capitalize the first letter of each word for name and job title
+    fullName = capitalizeWords(fullName);
+    jobTitle = capitalizeWords(jobTitle);
+
+
 
     let website, officeAddress, companyReg;
 
@@ -20,8 +53,8 @@ document.getElementById('generateButton').addEventListener('click', function() {
             break;
         case 'IE':
             website = 'www.accora.care';
-            officeAddress = '38 Main Street, Swords, Co. Dublin, Ireland, K67 E0A2, +353 1 695 0614';
-            companyReg = 'Accora Ltd., registered in Ireland with Reg. No, 644783 with registered office at 38 Main Street, Swords, Co. Dublin, Ireland, K67 E0A2.';
+            officeAddress = '38 Main Street, Swords, Co. Dublin, Ireland, +353 1 695 0614';
+            companyReg = 'Accora Ltd., registered in Ireland with Reg. No, 644783 with registered office at 38 Main Street, Swords, Co. Dublin, Ireland.';
             break;
     }
 
@@ -59,6 +92,7 @@ const fullSignatureHTML = `
     document.getElementById('signaturePreview').innerHTML = signatureHTML;
     document.getElementById('htmlOutput').textContent = fullSignatureHTML;
     document.getElementById('signaturePreviewSection').style.display = 'block'; // Show the signature preview
+    document.getElementById('signaturePreviewHeading').style.display = 'block'; // Show the signature preview heading
     document.getElementById('htmlOutputSection').style.display = 'block'; // Show the HTML output section
 
 });
